@@ -39,13 +39,16 @@ if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
     exit 1
 fi
 
-# 6. Build and Start
-echo "🏗️  Building and starting containers..."
-
+# 6. Cleanup & Build
+echo "♻️  Stopping old containers..."
 # Try 'docker compose' (v2) first, fallback to 'docker-compose' (v1)
 if docker compose version &> /dev/null; then
+    docker compose -f $DOCKER_COMPOSE_FILE down
+    echo "🏗️  Building and starting containers..."
     docker compose -f $DOCKER_COMPOSE_FILE up -d --build
 else
+    docker-compose -f $DOCKER_COMPOSE_FILE down
+    echo "🏗️  Building and starting containers..."
     docker-compose -f $DOCKER_COMPOSE_FILE up -d --build
 fi
 
