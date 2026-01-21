@@ -52,7 +52,8 @@ PORT=${APP_PORT:-3002}
 if [ $? -eq 0 ]; then
     echo "✅ Installation successful!"
     echo "🌐 App is running on localhost:$PORT (mapped to container port 80)"
-    echo "🔗 Ensure your NGINX Proxy Manager points to this container/port."
+    echo "🔗 Configure NGINX Proxy Manager to point to: http://agencyflow-app:80"
+    echo "📄 See DEPLOYMENT.md for detailed setup instructions."
 else
     echo "❌ Installation failed."
     exit 1
