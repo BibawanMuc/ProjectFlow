@@ -21,34 +21,7 @@ export const NotificationsDropdown: React.FC<Props> = ({ onClose }) => {
         enabled: !!user,
     });
 
-    // Real-time subscription
-    useEffect(() => {
-        if (!user) return;
-
-        const channel = supabase
-            .channel('notifications-changes')
-            .on(
-                'postgres_changes',
-                {
-                    event: 'INSERT',
-                    schema: 'public',
-                    table: 'notifications',
-                    filter: `user_id=eq.${user.id}`,
-                },
-                (payload) => {
-                    const newNotification = payload.new as Notification;
-                    // Invalidate to fetch new data
-                    queryClient.invalidateQueries({ queryKey: ['notifications'] });
-                    // Show toast
-                    toast.info(newNotification.title);
-                }
-            )
-            .subscribe();
-
-        return () => {
-            supabase.removeChannel(channel);
-        };
-    }, [user, queryClient]);
+    // Real-time subscription handled globally in useRealtime hook
 
     const markReadMutation = useMutation({
         mutationFn: markNotificationAsRead,

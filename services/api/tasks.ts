@@ -1,5 +1,7 @@
 import { supabase } from '../../lib/supabase';
 import type { Task } from '../../types/supabase';
+import { TaskStatus } from '../../types/supabase';
+import { createNotification } from './notifications';
 
 /**
  * Get all tasks with assignee and project data
@@ -92,6 +94,22 @@ export async function createTask(
     throw new Error(`Failed to create task: ${error.message}`);
   }
 
+  // Create notification if assigned to someone else
+  if (taskData.assigned_to) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user && taskData.assigned_to !== user.id) {
+      await createNotification({
+        user_id: taskData.assigned_to,
+        type: 'info',
+        title: 'New Task Assignment',
+        message: `You have been assigned to task: ${data.title}`,
+        link: `/projects/${data.project_id}?view=tasks&taskId=${data.id}`,
+        related_entity_id: data.id,
+        related_entity_type: 'task'
+      });
+    }
+  }
+
   return data;
 }
 
@@ -119,6 +137,23 @@ export async function updateTask(
     throw new Error(`Failed to update task: ${error.message}`);
   }
 
+  // Create notification if assignee changed
+  if (updates.assigned_to) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user && updates.assigned_to !== user.id) {
+      // Verify if it's a new assignment (optional optimization: check previous state, but for now we notify on any set)
+      await createNotification({
+        user_id: updates.assigned_to,
+        type: 'info',
+        title: 'Task Assignment Update',
+        message: `You have been assigned to task: ${data.title}`,
+        link: `/projects/${data.project_id}?view=tasks&taskId=${data.id}`,
+        related_entity_id: data.id,
+        related_entity_type: 'task'
+      });
+    }
+  }
+
   return data;
 }
 
@@ -139,7 +174,7 @@ export async function deleteTask(id: string): Promise<void> {
  */
 export async function updateTaskStatus(
   id: string,
-  status: 'todo' | 'in_progress' | 'review' | 'done'
+  status: TaskStatus
 ): Promise<Task> {
   return updateTask(id, { status });
 }
@@ -149,7 +184,7 @@ export async function updateTaskStatus(
  */
 export async function getTasksByStatus(
   projectId: string,
-  status: 'todo' | 'in_progress' | 'review' | 'done'
+  status: TaskStatus
 ): Promise<Task[]> {
   const { data, error } = await supabase
     .from('tasks')

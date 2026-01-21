@@ -63,17 +63,13 @@ export async function markAllNotificationsAsRead(): Promise<void> {
  */
 export async function createNotification(
     notification: Omit<Notification, 'id' | 'created_at' | 'is_read'>
-): Promise<Notification> {
-    const { data, error } = await supabase
+): Promise<void> {
+    const { error } = await supabase
         .from('notifications')
-        .insert(notification)
-        .select()
-        .single();
+        .insert(notification);
 
     if (error) {
         console.error('Error creating notification:', error);
         throw new Error(`Failed to create notification: ${error.message}`);
     }
-
-    return data;
 }

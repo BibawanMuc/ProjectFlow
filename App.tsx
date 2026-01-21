@@ -12,6 +12,7 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { ClientDashboard } from './components/ClientDashboard';
+import { useRealtime } from './lib/useRealtime';
 import { ProjectList } from './components/ProjectList';
 import { ProjectDetail } from './components/ProjectDetail';
 import { TaskList } from './components/TaskList';
@@ -33,6 +34,9 @@ const MainApp: React.FC = () => {
   const [activeProject, setActiveProject] = useState<Project | null>(MOCK_PROJECTS[0]);
   const [searchQuery, setSearchQuery] = useState('');
   const { user, profile, loading } = useAuth();
+
+  // Initialize Realtime subscriptions
+  useRealtime();
 
   // Test Supabase connection on mount (only when authenticated)
   useEffect(() => {
