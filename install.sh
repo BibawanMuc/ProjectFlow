@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Configuration
+APP_NAME="agencyflow-app"
+DOCKER_COMPOSE_FILE="docker-compose.prod.yml"
+
+echo "🚀 Starting installation for $APP_NAME..."
+
+# 1. Check for .env file
+if [ ! -f .env ]; then
+    echo "❌ Error: .env file not found!"
+    echo "Please create a .env file with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY"
+    exit 1
+fi
+
+echo "✅ .env file found."
+
+# 2. Check for Docker
+if ! command -v docker &> /dev/null; then
+    echo "❌ Error: Docker is not installed."
+    exit 1
+fi
+
+# 3. Check for Docker Compose
+if ! command -v docker-compose &> /dev/null; then
+    if ! docker compose version &> /dev/null; then
+        echo "❌ Error: Docker Compose is not installed."
+        exit 1
+    fi
+fi
+
+# 4. Set permissions (optional but good practice)
+chmod +x install.sh
+
+# 5. Build and Start
+echo "🏗️  Building and starting containers..."
+
+# Try 'docker compose' (v2) first, fallback to 'docker-compose' (v1)
+if docker compose version &> /dev/null; then
+    docker compose -f $DOCKER_COMPOSE_FILE up -d --build
+else
+    docker-compose -f $DOCKER_COMPOSE_FILE up -d --build
+fi
+
+# Load env vars to display correct port
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+PORT=${APP_PORT:-3002}
+
+if [ $? -eq 0 ]; then
+    echo "✅ Installation successful!"
+    echo "🌐 App is running on localhost:$PORT (mapped to container port 80)"
+    echo "🔗 Ensure your NGINX Proxy Manager points to this container/port."
+else
+    echo "❌ Installation failed."
+    exit 1
+fi
