@@ -1,0 +1,17 @@
+services:
+  agencyflow:
+    build:
+      context: .
+      args:
+        - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+        - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
+    container_name: agencyflow-app
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${APP_PORT:-3002}:80"  # Uses APP_PORT from .env, defaults to 3002 if not set
+    networks:
+      - proxy-netz
+
+networks:
+  proxy-netz:
+    external: true
