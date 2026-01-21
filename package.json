@@ -1,0 +1,34 @@
+{
+  "name": "agencyflow---project-management",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@supabase/supabase-js": "^2.90.1",
+    "@tanstack/react-query": "^5.90.16",
+    "@types/jspdf": "^1.3.3",
+    "csv-parser": "^3.2.0",
+    "jspdf": "^4.0.0",
+    "jspdf-autotable": "^5.0.7",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-toastify": "^11.0.5",
+    "recharts": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "dotenv": "^17.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}
