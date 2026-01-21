@@ -113,6 +113,15 @@ This app aims to increase efficiency, improve transparency for internal teams an
 - Full integration with profiles table
 - Used for billable hours calculations in finance tracking
 
+**✅ Real-time Collaboration & Notifications**
+- **Live Data Sync**: Tasks, Costs, and Financials update instantly across all connected clients.
+- **Global Notification System**:
+    - **Instant Toast Alerts**: Receive popup notifications for assignments even when browsing other pages.
+    - **Badge Count**: Red notification badge updates in real-time.
+    - **Assignment Tracking**: Automatic notifications when tasks are assigned to you.
+- **Presence Awareness**: See who is currently online (green dot indicator on avatars).
+- **Efficient Sync**: Uses Supabase Realtime (Postgres Changes) to push updates only when necessary.
+
 **✅ Service-Katalog v2 (Admin-Only) - Normalized Multi-Table Structure**
 - **3-table architecture** for granular service pricing
   - service_modules: Master service definitions
@@ -241,7 +250,7 @@ This app aims to increase efficiency, improve transparency for internal teams an
 | Financial Documents | ✅ 100% | ✅ | Quotes & Invoices with Service Selection, Real-time Budget Sync |
 | Reports | ⏳ 0% | Medium | Analytics dashboard with service profitability analysis |
 | Resource Planning | ⏳ 30% | Medium | Employee hours tracked, scheduling needed |
-| Real-time Updates | ✅ 80% | High | React Query Invalidation (Budget/Margin/Tasks) ✅, Supabase Realtime ⏳ |
+| Real-time Updates | ✅ 100% | High | Supabase Realtime (WebSockets) |
 
 ### New in v1.8.0
 | Feature | Status | Notes |
@@ -258,6 +267,7 @@ This app aims to increase efficiency, improve transparency for internal teams an
 | Notifications | ✅ 100% | Real-time alerts, bell icon, feedback loops |
 | Time Approvals | ✅ 100% | Approval workflow, rejection with reason |
 | Secure Team View | ✅ 100% | Employee visibility without financial data (RPC secured) |
+| Real-time Updates | ✅ 100% | Live Task/Cost sync, Toast Notifications |
 
 ---
 
