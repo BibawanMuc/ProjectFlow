@@ -55,6 +55,10 @@ npm run preview                # Preview production build
 │   │   ├── CalendarView.tsx   # Monthly task grid
 │   │   └── GanttView.tsx      # Project timeline
 │   ├── Reports.tsx            # Service Profitability Analytics
+│   ├── ResourcePlanning.tsx   # Resource Planning & Capacity Module
+│   ├── resources/             # Resource sub-components
+│   │   ├── ResourceTimeline.tsx # Interactive Gantt/Heatmap
+│   │   └── TaskAllocationModal.tsx # Reassignment Modal
 │   ├── TimeApprovalList.tsx   # Time card approval workflow
 │   ├── AssetUploadModal.tsx   # Upload files to projects
 │   ├── AssetPreviewModal.tsx  # Preview assets (images, PDFs, videos, audio)
@@ -79,6 +83,7 @@ npm run preview                # Preview production build
 │   │   ├── timeEntries.ts     # Time tracking + billable value
 │   │   ├── profiles.ts        # User profiles (Admin full, Employee restricted RPC)
 │   │   ├── reports.ts         # Profitability analytics
+│   │   ├── resources.ts       # Capacity logic (Time distribution, native Date math)
 │   │   └── notifications.ts   # Real-time user alerts
 ├── lib/
 │   ├── supabase.ts            # Supabase client singleton
@@ -598,3 +603,19 @@ Personal filter button on Tasks, Projects, and Assets pages:
 - Images/assets served from Supabase storage CDN
 - Bundle size: Monitor with `npm run build` (Recharts is large)
 - Consider lazy loading for modal components if bundle grows
+
+### Resource Planning Module (v1.11.0)
+- **ResourcePlanning.tsx**: Main container for capacity planning
+- **ResourceTimeline.tsx**:
+  - Custom Gantt-style implementation using native JS `Date` (no date-fns dependency)
+  - Heatmap visual: Green (<80%), Yellow (80-100%), Red (>100%)
+  - Interactive cells: Click to open `TaskAllocationModal`
+- **TaskAllocationModal.tsx**:
+  - Reassign tasks to different team members
+  - Date changes: Redirects user to Task Detail (informational text)
+  - Auto-updates parent timeline on success
+- **services/api/resources.ts**:
+  - `getResourceAvailability()`: Core logic for distributing task hours active across business days
+  - Handles `profiles` (capacity) vs `tasks` (load)
+  - Returns `ResourceData[]` with daily allocations
+
