@@ -32,7 +32,14 @@ fi
 # 4. Set permissions (optional but good practice)
 chmod +x install.sh
 
-# 5. Build and Start
+# 5. Check for Docker Compose file
+if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
+    echo "❌ Error: $DOCKER_COMPOSE_FILE not found!"
+    echo "Please ensure you are in the correct directory and the file exists."
+    exit 1
+fi
+
+# 6. Build and Start
 echo "🏗️  Building and starting containers..."
 
 # Try 'docker compose' (v2) first, fallback to 'docker-compose' (v1)
@@ -42,6 +49,9 @@ else
     docker-compose -f $DOCKER_COMPOSE_FILE up -d --build
 fi
 
+# Capture exit code of the docker command
+DOCKER_EXIT_CODE=$?
+
 # Load env vars to display correct port
 if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
@@ -49,7 +59,7 @@ fi
 
 PORT=${APP_PORT:-3002}
 
-if [ $? -eq 0 ]; then
+if [ $DOCKER_EXIT_CODE -eq 0 ]; then
     echo "✅ Installation successful!"
     echo "🌐 App is running on localhost:$PORT (mapped to container port 80)"
     echo "🔗 Configure NGINX Proxy Manager to point to: http://agencyflow-app:80"
