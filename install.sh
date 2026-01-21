@@ -41,6 +41,11 @@ fi
 
 # 6. Cleanup & Build
 echo "♻️  Stopping old containers..."
+
+# Force remove the specific container by name to ensure no conflicts exist
+# (This handles cases where the docker project name might have changed)
+docker rm -f agencyflow-app 2>/dev/null || true
+
 # Try 'docker compose' (v2) first, fallback to 'docker-compose' (v1)
 if docker compose version &> /dev/null; then
     docker compose -f $DOCKER_COMPOSE_FILE down
