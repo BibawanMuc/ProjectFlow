@@ -24,10 +24,11 @@ import { Finances } from './components/Finances';
 import { Reports } from './components/Reports';
 import { Planning } from './components/Planning';
 import { Settings } from './components/Settings';
+import ResourcePlanning from './components/ResourcePlanning';
 import type { Project } from './types/supabase';
 import { MOCK_PROJECTS } from './constants';
 
-export type View = 'dashboard' | 'projects' | 'project-detail' | 'tasks' | 'planning' | 'assets' | 'clients' | 'employees' | 'service-catalog' | 'finances' | 'reports' | 'settings';
+export type View = 'dashboard' | 'projects' | 'project-detail' | 'tasks' | 'planning' | 'assets' | 'clients' | 'employees' | 'service-catalog' | 'finances' | 'reports' | 'resources' | 'settings';
 
 const MainApp: React.FC = () => {
   const [view, setView] = useState<View>('dashboard');
@@ -91,6 +92,8 @@ const MainApp: React.FC = () => {
         return <Finances />;
       case 'reports':
         return <Reports />;
+      case 'resources':
+        return <ResourcePlanning />;
       default:
         return profile?.role === 'client'
           ? <ClientDashboard onSelectProject={handleSelectProject} />

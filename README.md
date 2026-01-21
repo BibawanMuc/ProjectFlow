@@ -163,6 +163,18 @@ This app aims to increase efficiency, improve transparency for internal teams an
 - **Integration ready**: Works automatically when projects have approved quotes
 - **Future expansion**: Task-level service tracking (Option B) documented in ROADMAP-SERVICE-INTEGRATION.md
 
+**✅ Resource Planning (Interactive Capacity Timeline)**
+- **Timeline View**: Visual Gantt-style overview of team workload
+- **Heatmap Visualization**: Color-coded capacity indicators
+  - Green (<80%): Available
+  - Yellow (80-100%): Fully booked
+  - Red (>100%): Overbooked
+- **Interactive Management**: Click on any cell to open Allocation Modal
+- **Task Reassignment**: Instantly move tasks between team members
+- **Real-time updates**: Changes reflect immediately for all users
+- **Date Navigation**: Jump between weeks to plan ahead
+- **Smart Tooltips**: Hover for detailed task breakdown per day
+
 **✅ Asset Management (Modern Grid View with Preview)**
 - Complete file upload/download/delete workflow
 - **Modern card-based grid layout** (responsive: 1/2/3 columns)
@@ -248,8 +260,8 @@ This app aims to increase efficiency, improve transparency for internal teams an
 | Feature | Status | Priority | Notes |
 |---------|--------|----------|-------|
 | Financial Documents | ✅ 100% | ✅ | Quotes & Invoices with Service Selection, Real-time Budget Sync |
-| Reports | ⏳ 0% | Medium | Analytics dashboard with service profitability analysis |
-| Resource Planning | ⏳ 30% | Medium | Employee hours tracked, scheduling needed |
+| Reports | ✅ 100% | Medium | Analytics dashboard with service profitability analysis |
+| Resource Planning | ✅ 100% | Medium | Employee hours tracked, interactive capacity timeline |
 | Real-time Updates | ✅ 100% | High | Supabase Realtime (WebSockets) |
 
 ### New in v1.8.0
@@ -268,6 +280,12 @@ This app aims to increase efficiency, improve transparency for internal teams an
 | Time Approvals | ✅ 100% | Approval workflow, rejection with reason |
 | Secure Team View | ✅ 100% | Employee visibility without financial data (RPC secured) |
 | Real-time Updates | ✅ 100% | Live Task/Cost sync, Toast Notifications |
+
+### New in v1.11.0
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Resource Planning | ✅ 100% | Interactive Timeline, Capacity Heatmap, Task Reassignment Modal |
+| PDF/CSV Export | ✅ 100% | Professional Quotes/Invoices, Payroll Data Export |
 
 ---
 

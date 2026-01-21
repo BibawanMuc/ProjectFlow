@@ -406,9 +406,9 @@ Don't try to create RLS policies for admin access to all profiles - use service 
 
 ### High Priority
 1. **Integrations & Export (Phase 2)**
-   - Automated email notifications (Edge Functions)
-   - API for external tool integration
-   - Resource planning with capacity view
+   - [x] Automation email notifications (Edge Functions)
+   - [ ] API for external tool integration
+   - [x] Resource planning with capacity view
 
 
 ---
